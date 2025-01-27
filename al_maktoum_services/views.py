@@ -19,10 +19,14 @@ class ProjectListCreateView(APIView):
 
     def post(self, request):
         serializer = ProjectSerializer(data=request.data)
+        # print(request.data)  # Debugging: Check the raw data received
+        # print(serializer.is_valid())  # Debugging: Check if valid
+        # print(serializer.errors)  # Debugging: Check validation errors
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ExpenseListCreateView(APIView):
