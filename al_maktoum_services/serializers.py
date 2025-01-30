@@ -6,6 +6,12 @@ class ExpenseSerializer(serializers.ModelSerializer):
         model = Expense
         fields = '__all__'
 
+    def validate_project(self, value):
+        # Ensure the project is valid
+        if not value:
+            raise serializers.ValidationError("Project is required.")
+        return value
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     supervisor = serializers.JSONField(write_only=True)  # Handle nested supervisor data

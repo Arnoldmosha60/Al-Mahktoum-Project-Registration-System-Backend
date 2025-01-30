@@ -15,7 +15,6 @@ class Project(models.Model):
 class Expense(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="expenses")
     amount_spent = models.DecimalField(max_digits=10, decimal_places=2)
-    particular = models.TextField()
-    transaction_date = models.DateField()
+    reason = models.TextField()
+    transaction_date = models.DateField(auto_now=True)
     receipt = models.FileField(upload_to="receipts/", blank=True, null=True)
-    created_at = models.DateTimeField(auto_now=True)

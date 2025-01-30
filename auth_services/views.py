@@ -10,8 +10,9 @@ class RegistrationView(views.APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        print(request)
+        print(request.data)  # Check incoming data
         serializer = RegistrationSerializer(data=request.data)
+        
         if serializer.is_valid():
             user = serializer.save()
             token, created = Token.objects.get_or_create(user=user)
@@ -23,6 +24,8 @@ class RegistrationView(views.APIView):
                 'national_id_number': user.national_id_number,
                 'token': token.key
             }, status=status.HTTP_201_CREATED)
+        
+        print(serializer.errors)  # Print the validation errors
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Login View
